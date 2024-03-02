@@ -1,0 +1,94 @@
+body {
+  width: 150px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  width: 300px;
+  margin: 30px 0 20px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.user-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-details {
+  flex: 1;
+}
+
+.title {
+  display: inline;
+}
+
+.name {
+  font-weight: bold;
+  display: inline; /* Corrected typo */
+}
+
+.post-image {
+  margin-bottom: 10px;
+  width: 250px;
+}
+
+.post-image {
+  width: 100%;
+  max-height: 150px;
+}
+
+img {
+  max-width: 100%;
+}
+
+.description {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+span {
+  font-weight: bold;
+}
+
+.tags {
+  margin-top: 5px;
+  font-style: italic;
+
+  margin-bottom: 5px;
+}
+
+.tag {
+  display: inline-block;
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 3px 8px;
+  border-radius: 5px;
+  margin-right: 5px; /* Add some margin between tags if needed */
+}
+
+.tags-title {
+  font-weight: bold;
+}
+
+.likes {
+  margin-top: 10px;
+  font-weight: bold;
+  display: flex;
+  /* justify-content: center; */
+}
+
+.btn-create {
+  position: fixed;
+  bottom: 20px;
+  right: calc(50% - 150px);
+  z-index: 999;
+}
