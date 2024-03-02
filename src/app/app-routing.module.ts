@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
-import { AuthComponent } from './auth/auth.component';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
+import { AuthComponent } from './auth/components/auth.component';
 
 const routes: Routes = [
   {
@@ -22,16 +22,15 @@ const routes: Routes = [
 
   {
     path: '',
-    redirectTo: '/posts',
+    redirectTo: '/users',
     pathMatch: 'full',
   },
 
-  // { path: 'not-found', component: PageNotFoundComponent },
+  { path: 'not-found', component: PageNotFoundComponent },
 
   { path: 'auth', component: AuthComponent },
 
-  // { path: '**', redirectTo: 'not-found', pathMatch: 'full' },
-  // { path: '', redirectTo: '/users', pathMatch: 'full' },
+  { path: '**', redirectTo: 'not-found', pathMatch: 'full' },
 ];
 
 @NgModule({

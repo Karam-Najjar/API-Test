@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthService } from '../applications/modules/user/services/auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-auth',

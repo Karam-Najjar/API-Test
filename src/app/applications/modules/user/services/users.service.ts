@@ -1,35 +1,35 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
 
+import { AuthService } from '../../../../auth/services/auth.service';
+import { UserListResponse } from '../interfaces/user-list-response.interface';
 import { User } from '../interfaces/user.interface';
-import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class UsersService {
   userDeletedSubject = new Subject();
+  error = new Subject();
   ID: any = this.authService.gettingId();
-  users: any[] = [];
   baseUrl: string = 'https://dummyapi.io/data/v1/';
-  headers = new HttpHeaders({
-    'app-id': this.ID,
-  });
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  fetchData(endPoint: string) {
+  fetchData(endPoint: string): Observable<UserListResponse> {
+    console.log('Hello from the service');
+
     const url = `${this.baseUrl}${endPoint}`;
-    return this.http.get(url);
+    return this.http.get<UserListResponse>(url);
   }
 
-  createUser(user: User) {
+  createUser(user: User): Observable<User> {
     const url = `${this.baseUrl}user/create`;
-    return this.http.post(url, user);
+    return this.http.post<User>(url, user);
   }
 
-  updateUser(userId: string, formData: any) {
+  updateUser(userId: string, formData: User) {
     const url = `${this.baseUrl}user/${userId}`;
-    return this.http.put(url, formData);
+    return this.http.put<User>(url, formData);
   }
 
   deleteUser(userId: string) {
@@ -39,9 +39,9 @@ export class UsersService {
     });
   }
 
-  viewUser(userId: string) {
+  viewUser(userId: string): Observable<User> {
     const url = `${this.baseUrl}user/${userId}`;
-    return this.http.get(url);
+    return this.http.get<User>(url);
   }
 
   getUserById(id: string) {

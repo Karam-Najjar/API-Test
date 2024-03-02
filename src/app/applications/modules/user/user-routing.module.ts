@@ -5,6 +5,7 @@ import { UsersComponent } from './users/users.component';
 import { ListUserComponent } from './pages/list-user/list-user.component';
 import { CreateUserComponent } from './pages/create-user/create-user.component';
 import { ViewUserComponent } from './pages/view-user/view-user.component';
+import { UserResolver } from './resolvers/user-resolver.service';
 
 const routes: Routes = [
   {
@@ -12,10 +13,21 @@ const routes: Routes = [
     component: UsersComponent,
     children: [
       { path: '', redirectTo: 'list', pathMatch: 'full' },
-      { path: 'list', component: ListUserComponent },
+      {
+        path: 'list',
+        component: ListUserComponent,
+      },
       { path: 'create', component: CreateUserComponent },
-      { path: ':id/view', component: ViewUserComponent },
-      { path: ':id/update', component: CreateUserComponent },
+      {
+        path: ':id/view',
+        component: ViewUserComponent,
+        resolve: { user: UserResolver },
+      },
+      {
+        path: ':id/update',
+        component: CreateUserComponent,
+        resolve: { user: UserResolver },
+      },
     ],
   },
 ];

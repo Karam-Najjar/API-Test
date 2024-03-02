@@ -4,6 +4,8 @@ import { Subject, takeUntil } from 'rxjs';
 
 import { UsersService } from '../../services/users.service';
 import { ErrorAlert } from '../../../../../shared/errors/error-alert.service';
+import { User } from '../../interfaces/user.interface';
+import { UserListResponse } from '../../interfaces/user-list-response.interface';
 
 @Component({
   selector: 'app-list-user',
@@ -11,8 +13,8 @@ import { ErrorAlert } from '../../../../../shared/errors/error-alert.service';
   styleUrl: './list-user.component.css',
 })
 export class ListUserComponent implements OnInit, OnDestroy {
-  unsubscribe = new Subject();
-  users = this.userService.users;
+  users: User[] = [];
+  private unsubscribe$ = new Subject<void>();
 
   constructor(
     private userService: UsersService,
@@ -21,49 +23,49 @@ export class ListUserComponent implements OnInit, OnDestroy {
     private errorAlert: ErrorAlert
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.userService
       .fetchData('user?created=1')
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe(
-        (users: any) => {
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (users: UserListResponse) => {
+          console.log('Hello from list');
           this.users = users.data;
         },
-        (error) => {
+        error: (error) => {
           this.errorAlert.showErrorAlert(error.error.error);
-        }
-      );
+        },
+      });
 
-    this.userService.userDeletedSubject.subscribe((deletedUserId: any) => {
-      this.users = this.users.filter((user) => user.id !== deletedUserId);
-    });
+    this.userService.userDeletedSubject
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (deletedUserId: any) => {
+          this.users = this.users.filter((user) => user.id !== deletedUserId);
+        },
+      });
   }
 
-  onUpdateUser(index: number) {
-    const userId = this.users[index].id;
+  onUpdateUser(userId: string) {
     this.router.navigate(['../', userId, 'update'], {
       relativeTo: this.route,
     });
   }
 
-  onViewUser(index: number) {
-    console.log(this.route.url);
-
-    const userId = this.users[index].id;
+  onViewUser(userId: string) {
     this.router.navigate(['../', userId, 'view'], {
       relativeTo: this.route,
     });
   }
 
-  onDeleteUser(index: number) {
-    const userId = this.users[index].id;
+  onDeleteUser(userId: string) {
     if (confirm('Are you sure?')) {
       this.userService.deleteUser(userId);
     }
   }
 
-  ngOnDestroy() {
-    this.unsubscribe.next(true);
-    this.unsubscribe.complete();
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

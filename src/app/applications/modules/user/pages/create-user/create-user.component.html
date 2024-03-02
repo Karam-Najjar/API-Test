@@ -55,6 +55,25 @@
       {{ getValidationErrorMessage("title") }}
     </div>
   </div>
+
+  <div class="mb-3">
+    <label for="picture" class="form-label">Image</label>
+    <input
+      placeholder="Image URL"
+      type="text"
+      class="form-control"
+      id="picture"
+      formControlName="picture"
+    />
+    <div
+      class="error"
+      *ngIf="
+        createForm.get('picture')?.errors && createForm.get('picture')?.touched
+      "
+    >
+      {{ getValidationErrorMessage("picture") }}
+    </div>
+  </div>
   <div class="mb-3">
     <label for="email" class="form-label">Email</label>
     <input

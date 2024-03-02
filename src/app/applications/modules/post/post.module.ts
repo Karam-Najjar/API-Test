@@ -6,11 +6,23 @@ import { ListPostComponent } from './pages/list-post/list-post.component';
 import { CreatePostComponent } from './pages/create-post/create-post.component';
 import { ViewPostComponent } from './pages/view-post/view-post.component';
 import { PostRoutingModule } from './post-routing.module';
+import { PostsComponent } from './posts/posts.component';
+import { SharedModule } from '../../../shared/shared.module';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [ListPostComponent, CreatePostComponent, ViewPostComponent],
-  imports: [RouterModule, ReactiveFormsModule, PostRoutingModule],
-  // Remove the exports after adding the routes
-  exports: [ListPostComponent, CreatePostComponent, ViewPostComponent],
+  declarations: [
+    PostsComponent,
+    ListPostComponent,
+    CreatePostComponent,
+    ViewPostComponent,
+  ],
+  imports: [
+    RouterModule,
+    ReactiveFormsModule,
+    PostRoutingModule,
+    SharedModule,
+    MatIconModule,
+  ],
 })
 export class PostModule {}
