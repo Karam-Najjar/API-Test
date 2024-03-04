@@ -1,49 +1,59 @@
-<div
-  style="display: flex; flex-wrap: wrap; justify-content: center"
-  class="container"
->
+<app-alert
+  [message]="error"
+  *ngIf="error"
+  (close)="onHandleError()"
+></app-alert>
+<ng-container *ngIf="isLoading">
+  <app-spinner></app-spinner>
+</ng-container>
+<ng-container *ngIf="!isLoading">
   <div
-    *ngFor="let post of posts; let i = index"
-    class="row align-items-start"
-    style="max-width: 300px; margin: 0 10px"
+    style="display: flex; flex-wrap: wrap; justify-content: center"
+    class="container"
   >
-    <div class="card col" style="max-width: 300px">
-      <div class="user-info">
-        <img [src]="post.owner.picture" alt="User Image" class="user-image" />
-        <div class="user-details">
-          <div class="title">{{ post.owner.title }} :</div>
-          <div class="name">
-            {{ post.owner.firstName }} - {{ post.owner.lastName }}
+    <div
+      *ngFor="let post of posts; let i = index"
+      class="row align-items-start"
+      style="max-width: 300px; margin: 0 10px"
+    >
+      <div class="card col" style="max-width: 300px">
+        <div class="user-info">
+          <img [src]="post.owner.picture" alt="User Image" class="user-image" />
+          <div class="user-details">
+            <div class="title">{{ post.owner.title }} :</div>
+            <div class="name">
+              {{ post.owner.firstName }} - {{ post.owner.lastName }}
+            </div>
+            <div class="date">{{ post.publishDate | date }}</div>
           </div>
-          <div class="date">{{ post.publishDate | date }}</div>
         </div>
+        <div class="post-image">
+          <img [src]="post.image" alt="Post Image" class="post-image" />
+        </div>
+        <div class="description">{{ post.text }}</div>
+        <div>
+          <span class="tags-title">Tags: </span>
+          <ng-container *ngFor="let tag of post.tags; let isLast = last">
+            <div class="tag">{{ tag }}</div>
+            <ng-container *ngIf="!isLast">&nbsp;</ng-container>
+          </ng-container>
+        </div>
+        <div class="likes">
+          Likes : {{ post.likes }}
+          <mat-icon style="margin-left: 5px">thumb_up</mat-icon>
+        </div>
+        <hr />
+        <app-actions
+          [id]="post.id"
+          (update)="onUpdatePost(i)"
+          (delete)="onDeletePost(i)"
+          (view)="onViewPost(post)"
+        >
+        </app-actions>
       </div>
-      <div class="post-image">
-        <img [src]="post.image" alt="Post Image" class="post-image" />
-      </div>
-      <div class="description">{{ post.text }}</div>
-      <div>
-        <span class="tags-title">Tags: </span>
-        <ng-container *ngFor="let tag of post.tags; let isLast = last">
-          <div class="tag">{{ tag }}</div>
-          <ng-container *ngIf="!isLast">&nbsp;</ng-container>
-        </ng-container>
-      </div>
-      <div class="likes">
-        Likes : {{ post.likes }}
-        <mat-icon style="margin-left: 5px">thumb_up</mat-icon>
-      </div>
-      <hr />
-      <app-actions
-        [id]="post.id"
-        (update)="onUpdatePost(i)"
-        (delete)="onDeletePost(i)"
-        (view)="onViewPost(i)"
-      >
-      </app-actions>
     </div>
   </div>
-  <button class="btn btn-success btn-create" routerLink="/posts/create">
+  <button class="btn btn-outline-success btn-create" routerLink="/posts/create">
     Create
   </button>
-</div>
+</ng-container>

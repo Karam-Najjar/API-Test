@@ -33,7 +33,7 @@ body {
 
 .name {
   font-weight: bold;
-  display: inline; /* Corrected typo */
+  display: inline;
 }
 
 .post-image {
@@ -72,7 +72,7 @@ span {
   color: #333;
   padding: 3px 8px;
   border-radius: 5px;
-  margin-right: 5px; /* Add some margin between tags if needed */
+  margin-right: 5px;
 }
 
 .tags-title {
@@ -83,12 +83,10 @@ span {
   margin-top: 10px;
   font-weight: bold;
   display: flex;
-  /* justify-content: center; */
 }
 
 .btn-create {
   position: fixed;
   bottom: 20px;
-  right: calc(50% - 150px);
-  z-index: 999;
+  right: 319px;
 }

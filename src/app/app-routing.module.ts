@@ -20,17 +20,14 @@ const routes: Routes = [
       ),
   },
 
+  { path: 'auth', component: AuthComponent },
+
   {
     path: '',
     redirectTo: '/users',
     pathMatch: 'full',
   },
-
-  { path: 'not-found', component: PageNotFoundComponent },
-
-  { path: 'auth', component: AuthComponent },
-
-  { path: '**', redirectTo: 'not-found', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({

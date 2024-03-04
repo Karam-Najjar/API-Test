@@ -1,33 +1,38 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+
 import { AuthService } from '../../../../auth/services/auth.service';
+import { PostListResponse } from '../interfaces/post-list-response.interface';
+import { Post } from '../interfaces/post.interface';
 
 @Injectable({ providedIn: 'root' })
 export class PostsService {
-  postDeletedSubject = new Subject();
-  error = new Subject();
-  ID: any = this.authService.gettingId();
+  postDeletedSubject = new Subject<string>();
+  error = new Subject<any>();
+  ID: any;
   baseUrl: string = 'https://dummyapi.io/data/v1/';
-  posts: any[] = [];
+  posts: Post[] = [];
 
-  changed = new Subject<any[]>();
+  changed = new Subject<Post[]>();
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService) {
+    this.ID = this.authService.gettingId();
+  }
 
-  fetchData(endPoint: string) {
+  fetchData(endPoint: string): Observable<PostListResponse> {
     const url = `${this.baseUrl}${endPoint}`;
-    return this.http.get(url);
+    return this.http.get<PostListResponse>(url);
   }
 
-  createPost(post: any) {
+  createPost(post: any): Observable<Post> {
     const url = `${this.baseUrl}post/create`;
-    return this.http.post(url, post);
+    return this.http.post<Post>(url, post);
   }
 
-  updatePost(postId: string, formData: any) {
+  updatePost(postId: string, formData: any): Observable<Post> {
     const url = `${this.baseUrl}post/${postId}`;
-    return this.http.put(url, formData);
+    return this.http.put<Post>(url, formData);
   }
 
   deletePost(postId: string) {
@@ -39,6 +44,6 @@ export class PostsService {
 
   getPostById(id: string) {
     const url = `${this.baseUrl}post/${id}`;
-    return this.http.get(url);
+    return this.http.get<Post>(url);
   }
 }

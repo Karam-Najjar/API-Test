@@ -12,23 +12,7 @@
       {{ getValidationErrorMessage("text") }}
     </div>
   </div>
-  <div class="mb-3">
-    <label for="likes" class="form-label">Likes</label>
-    <input
-      type="number"
-      class="form-control"
-      id="likes"
-      formControlName="likes"
-    />
-    <div
-      class="error"
-      *ngIf="
-        createForm.get('likes')?.errors && createForm.get('likes')?.touched
-      "
-    >
-      {{ getValidationErrorMessage("likes") }}
-    </div>
-  </div>
+
   <div class="mb-3">
     <label for="image" class="form-label">Image</label>
     <input
@@ -47,18 +31,25 @@
       {{ getValidationErrorMessage("image") }}
     </div>
   </div>
+  <!-- OWNER -->
 
   <label for="owner">Owner</label>
   <select
     formControlName="owner"
     style="width: 96%; margin-left: 10px"
     id="owner"
-    class="dropdown mb-3 btn btn-outline-secondary dropdown-toggle"
+    class="mb-3 btn-outline-secondary dropdown-toggle custom-dropdown"
   >
-    <option *ngFor="let owner of owners" [value]="owner.id">
+    <option
+      class="custom-option"
+      *ngFor="let owner of owners"
+      [value]="owner.id"
+    >
       {{ owner.firstName }} {{ owner.lastName }}
     </option>
   </select>
+
+  <!-- END OF OWNER -->
   <div class="mb-3">
     <label for="tagInput" class="form-label">Add Tag</label>
     <input type="text" class="form-control" id="tagInput" #tagInput />

@@ -3,7 +3,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { PostsService } from '../../services/posts.service';
-import { ErrorAlert } from '../../../../../shared/errors/error-alert.service';
+import { Post } from '../../interfaces/post.interface';
 
 @Component({
   selector: 'app-list-post',
@@ -11,33 +11,39 @@ import { ErrorAlert } from '../../../../../shared/errors/error-alert.service';
   styleUrl: './list-post.component.css',
 })
 export class ListPostComponent implements OnInit, OnDestroy {
-  unsubscribe = new Subject();
-  userDeletedSubject = new Subject();
-  posts = this.postsService.posts;
+  postDeletedSubject = new Subject();
+  private unsubscribe$ = new Subject<void>();
+  posts: Post[] = [];
+  isLoading: boolean = false;
+  error!: string | null;
 
   constructor(
     private postsService: PostsService,
     private router: Router,
-    private errorAlert: ErrorAlert,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    this.isLoading = true;
     this.postsService
       .fetchData('post')
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe(
-        (posts: any) => {
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (posts: any) => {
           this.posts = posts.data;
+          this.isLoading = false;
         },
-        (error) => {
-          this.errorAlert.showErrorAlert(error.error.error);
-        }
-      );
+        error: (error) => {
+          this.isLoading = false;
+          this.error = error.error.error;
+        },
+      });
 
-    this.postsService.postDeletedSubject.subscribe((deletedUserId: any) => {
-      this.posts = this.posts.filter((post) => post.id !== deletedUserId);
-    });
+    this.postsService.postDeletedSubject
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((deletedUserId: string) => {
+        this.posts = this.posts.filter((post) => post.id !== deletedUserId);
+      });
   }
 
   onUpdatePost(index: number) {
@@ -53,13 +59,16 @@ export class ListPostComponent implements OnInit, OnDestroy {
       this.postsService.deletePost(postId);
     }
   }
-
-  ngOnDestroy() {
-    this.unsubscribe.next(true);
-    this.unsubscribe.complete();
+  onViewPost(post: Post) {
+    console.log(post);
   }
 
-  onViewPost(index: number) {
-    console.log(this.posts[index].id);
+  onHandleError() {
+    this.error = null;
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
