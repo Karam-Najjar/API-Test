@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { UsersService } from '../../services/users.service';
-import { ErrorAlertService } from '../../../../../shared/errors/error-alert.service';
 import { User } from '../../interfaces/user.interface';
 import { UserListResponse } from '../../interfaces/user-list-response.interface';
 
@@ -16,12 +15,12 @@ export class ListUserComponent implements OnInit, OnDestroy {
   users: User[] = [];
   private unsubscribe$ = new Subject<void>();
   isLoading: boolean = false;
+  error!: string | null;
 
   constructor(
     private userService: UsersService,
     private router: Router,
-    private route: ActivatedRoute,
-    private errorAlert: ErrorAlertService
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -35,8 +34,8 @@ export class ListUserComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         },
         error: (error) => {
-          this.errorAlert.showErrorAlert(error.error.error);
           this.isLoading = false;
+          this.error = error.error.error;
         },
       });
 
@@ -65,6 +64,10 @@ export class ListUserComponent implements OnInit, OnDestroy {
     if (confirm('Are you sure?')) {
       this.userService.deleteUser(userId);
     }
+  }
+
+  onHandleError() {
+    this.error = null;
   }
 
   ngOnDestroy(): void {

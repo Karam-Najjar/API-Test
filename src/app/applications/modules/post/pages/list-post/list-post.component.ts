@@ -3,9 +3,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { PostsService } from '../../services/posts.service';
-import { ErrorAlertService } from '../../../../../shared/errors/error-alert.service';
 import { Post } from '../../interfaces/post.interface';
-import { PostListResponse } from '../../interfaces/post-list-response.interface';
 
 @Component({
   selector: 'app-list-post',
@@ -17,11 +15,11 @@ export class ListPostComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
   posts: Post[] = [];
   isLoading: boolean = false;
+  error!: string | null;
 
   constructor(
     private postsService: PostsService,
     private router: Router,
-    private errorAlert: ErrorAlertService,
     private route: ActivatedRoute
   ) {}
 
@@ -36,14 +34,14 @@ export class ListPostComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         },
         error: (error) => {
-          this.errorAlert.showErrorAlert(error.error.error);
           this.isLoading = false;
+          this.error = error.error.error;
         },
       });
 
     this.postsService.postDeletedSubject
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((deletedUserId: any) => {
+      .subscribe((deletedUserId: string) => {
         this.posts = this.posts.filter((post) => post.id !== deletedUserId);
       });
   }
@@ -63,6 +61,10 @@ export class ListPostComponent implements OnInit, OnDestroy {
   }
   onViewPost(post: Post) {
     console.log(post);
+  }
+
+  onHandleError() {
+    this.error = null;
   }
 
   ngOnDestroy() {

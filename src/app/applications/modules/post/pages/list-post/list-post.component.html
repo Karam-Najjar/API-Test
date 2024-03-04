@@ -1,3 +1,8 @@
+<app-alert
+  [message]="error"
+  *ngIf="error"
+  (close)="onHandleError()"
+></app-alert>
 <ng-container *ngIf="isLoading">
   <app-spinner></app-spinner>
 </ng-container>
@@ -47,8 +52,8 @@
         </app-actions>
       </div>
     </div>
-    <button class="btn btn-success btn-create" routerLink="/posts/create">
-      Create
-    </button>
   </div>
+  <button class="btn btn-outline-success btn-create" routerLink="/posts/create">
+    Create
+  </button>
 </ng-container>

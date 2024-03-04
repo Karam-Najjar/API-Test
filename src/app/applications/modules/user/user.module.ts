@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ListUserComponent } from './pages/list-user/list-user.component';
 import { CreateUserComponent } from './pages/create-user/create-user.component';
@@ -9,6 +8,6 @@ import { SharedModule } from '../../../shared/shared.module';
 
 @NgModule({
   declarations: [ListUserComponent, CreateUserComponent, ViewUserComponent],
-  imports: [ReactiveFormsModule, UserRoutingModule, SharedModule],
+  imports: [UserRoutingModule, SharedModule],
 })
 export class UserModule {}

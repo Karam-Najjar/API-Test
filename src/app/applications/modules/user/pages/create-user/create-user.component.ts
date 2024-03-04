@@ -6,11 +6,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { CustomValidators } from '../../../../../shared/validations/custom-validators';
 import { UsersService } from '../../services/users.service';
 import { FullUser } from '../../interfaces/full-user.interface';
-import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
@@ -25,6 +25,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
   isReadOnly: boolean = false;
   customValidator = CustomValidators;
   subscription!: Subscription;
+  error!: string | null;
 
   constructor(
     private usersService: UsersService,
@@ -67,15 +68,18 @@ export class CreateUserComponent implements OnInit, OnDestroy {
     if (this.userId) {
       this.subscription = this.usersService
         .updateUser(this.userId, formData)
-        .subscribe((data) => {
+        .subscribe(() => {
           this.router.navigate(['/users']);
         });
     } else {
-      this.subscription = this.usersService
-        .createUser(formData)
-        .subscribe((data) => {
+      this.subscription = this.usersService.createUser(formData).subscribe({
+        next: () => {
           this.router.navigate(['/users']);
-        });
+        },
+        error: (error) => {
+          this.error = error.error.error;
+        },
+      });
     }
   }
 
@@ -102,6 +106,9 @@ export class CreateUserComponent implements OnInit, OnDestroy {
     }
 
     return '';
+  }
+  onHandleError() {
+    this.error = null;
   }
 
   ngOnDestroy() {

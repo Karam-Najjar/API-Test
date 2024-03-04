@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,20 +11,14 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    PageNotFoundComponent,
-    AuthComponent,
-  ],
+  declarations: [AppComponent, HeaderComponent, PageNotFoundComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,
-    FormsModule,
     SharedModule,
-    MatIconModule,
     HttpClientModule,
     CoreModule,
+    AuthComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

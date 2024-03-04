@@ -1,4 +1,4 @@
-import { LocationInterface } from './location.intrface';
+import { LocationInterface } from './location.interface';
 
 export interface FullUser {
   id?: string;
