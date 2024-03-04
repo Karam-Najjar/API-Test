@@ -1,16 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 import { UsersService } from '../../services/users.service';
-import { ActivatedRoute } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { FullUser } from '../../interfaces/full-user.interface';
 @Component({
   selector: 'app-view-user',
   templateUrl: './view-user.component.html',
   styleUrl: './view-user.component.css',
 })
 export class ViewUserComponent implements OnInit, OnDestroy {
-  // users = this.usersService.users;
-  user: any;
+  user!: FullUser;
   userId!: any;
   private unsubscribe = new Subject<void>();
   public userData: any;

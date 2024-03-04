@@ -10,14 +10,12 @@ import { User } from '../interfaces/user.interface';
 export class UsersService {
   userDeletedSubject = new Subject();
   error = new Subject();
-  ID: any = this.authService.gettingId();
+  ID: string | null = this.authService.gettingId();
   baseUrl: string = 'https://dummyapi.io/data/v1/';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   fetchData(endPoint: string): Observable<UserListResponse> {
-    console.log('Hello from the service');
-
     const url = `${this.baseUrl}${endPoint}`;
     return this.http.get<UserListResponse>(url);
   }
