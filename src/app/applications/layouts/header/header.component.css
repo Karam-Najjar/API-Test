@@ -5,3 +5,8 @@ a {
 .navbar {
   margin-top: 5px;
 }
+
+.sxw-image {
+  max-height: 40px;
+  max-width: 40px;
+}
