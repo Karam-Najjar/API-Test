@@ -29,7 +29,6 @@ export class ListUserComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (users: UserListResponse) => {
-          console.log('Hello from list');
           this.users = users.data;
         },
         error: (error) => {

@@ -95,13 +95,17 @@ export class CreateUserComponent implements OnInit, OnDestroy {
     const formData = this.createForm.value;
 
     if (this.userId) {
-      this.usersService.updateUser(this.userId, formData).subscribe((data) => {
-        this.router.navigate(['/users']);
-      });
+      this.subscription = this.usersService
+        .updateUser(this.userId, formData)
+        .subscribe((data) => {
+          this.router.navigate(['/users']);
+        });
     } else {
-      this.usersService.createUser(formData).subscribe((data) => {
-        this.router.navigate(['/users']);
-      });
+      this.subscription = this.usersService
+        .createUser(formData)
+        .subscribe((data) => {
+          this.router.navigate(['/users']);
+        });
     }
   }
 
