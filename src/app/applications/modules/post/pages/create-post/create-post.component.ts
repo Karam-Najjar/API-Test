@@ -1,15 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  FormControl,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { CustomValidators } from '../../../user/validations/custom-validators';
+
+import { CustomValidators } from '../../../../../shared/validations/custom-validators';
 import { PostsService } from '../../services/posts.service';
 import { UsersService } from '../../../user/services/users.service';
+import { Post } from '../../interfaces/post.interface';
+import { FullUser } from '../../../user/interfaces/full-user.interface';
 
 @Component({
   selector: 'app-create-post',
@@ -20,17 +18,13 @@ export class CreatePostComponent implements OnInit, OnDestroy {
   formTitle: string = 'Create new post';
   postId!: any;
   createForm!: FormGroup;
-  posts = this.postService.posts;
-  post: any;
+  post!: Post;
   isReadOnly: boolean = false;
   customValidator = CustomValidators;
-  // subscription!: Subscription;
-  owners: any;
+  owners!: FullUser[];
   tags: string[] = [];
 
-  // Add
   subscription!: Subscription;
-  // End
 
   constructor(
     private usersService: UsersService,
@@ -42,6 +36,8 @@ export class CreatePostComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.postId = this.route.snapshot.params['id'];
+    this.post = this.route.snapshot.data['post'];
+
     this.getOwners();
 
     if (this.postId) {
@@ -53,14 +49,12 @@ export class CreatePostComponent implements OnInit, OnDestroy {
           this.post = postData;
           this.tags = postData.tags;
           postData.owner = postData.owner.id;
-          console.log(postData);
-
           this.createForm.patchValue(postData);
         });
     }
     this.createForm = this.fb.group({
       text: ['', [Validators.required, Validators.minLength(2)]],
-      likes: [null, Validators.required],
+      likes: [7],
       image: ['', Validators.required],
       owner: [{ value: null, disabled: this.isReadOnly }, Validators.required],
     });

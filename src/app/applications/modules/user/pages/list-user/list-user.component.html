@@ -1,46 +1,51 @@
-<div style="text-align: center"></div>
-<h3>Users</h3>
-<div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Title</th>
-        <th scope="col">First Name</th>
-        <th scope="col">Last Name</th>
-        <th scope="col">Picture</th>
-        <!-- <th scope="col">Actions</th> -->
-      </tr>
-    </thead>
-    <tbody *ngFor="let user of users; let i = index">
-      <tr>
-        <td>{{ user.title }}</td>
-        <td>{{ user.firstName }}</td>
-        <td>{{ user.lastName }}</td>
-        <td>
-          <img
-            class="rounded-circle"
-            [src]="user.picture"
-            [alt]="user.firstName"
-          />
-        </td>
-        <td>
-          <!-- BUTTONS GO HERE -->
-          <app-actions
-            [id]="user.id"
-            (update)="onUpdateUser($event)"
-            (delete)="onDeleteUser($event)"
-            (view)="onViewUser($event)"
-          >
-          </app-actions>
-        </td>
-      </tr>
-    </tbody>
+<ng-container *ngIf="isLoading">
+  <app-spinner></app-spinner>
+</ng-container>
+<ng-container *ngIf="!isLoading">
+  <div style="text-align: center"></div>
+  <h3>Users</h3>
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Picture</th>
+          <!-- <th scope="col">Actions</th> -->
+        </tr>
+      </thead>
+      <tbody *ngFor="let user of users; let i = index">
+        <tr>
+          <td>{{ user.title }}</td>
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.lastName }}</td>
+          <td>
+            <img
+              class="rounded-circle"
+              [src]="user.picture"
+              [alt]="user.firstName"
+            />
+          </td>
+          <td>
+            <!-- BUTTONS GO HERE -->
+            <app-actions
+              [id]="user.id"
+              (update)="onUpdateUser($event)"
+              (delete)="onDeleteUser($event)"
+              (view)="onViewUser($event)"
+            >
+            </app-actions>
+          </td>
+        </tr>
+      </tbody>
 
-    <button
-      class="btn btn-outline-success btn-create"
-      routerLink="/users/create"
-    >
-      Create
-    </button>
-  </table>
-</div>
+      <button
+        class="btn btn-outline-success btn-create"
+        routerLink="/users/create"
+      >
+        Create
+      </button>
+    </table>
+  </div>
+</ng-container>

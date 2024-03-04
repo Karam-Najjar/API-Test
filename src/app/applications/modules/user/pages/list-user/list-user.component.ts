@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { UsersService } from '../../services/users.service';
-import { ErrorAlert } from '../../../../../shared/errors/error-alert.service';
+import { ErrorAlertService } from '../../../../../shared/errors/error-alert.service';
 import { User } from '../../interfaces/user.interface';
 import { UserListResponse } from '../../interfaces/user-list-response.interface';
 
@@ -15,24 +15,28 @@ import { UserListResponse } from '../../interfaces/user-list-response.interface'
 export class ListUserComponent implements OnInit, OnDestroy {
   users: User[] = [];
   private unsubscribe$ = new Subject<void>();
+  isLoading: boolean = false;
 
   constructor(
     private userService: UsersService,
     private router: Router,
     private route: ActivatedRoute,
-    private errorAlert: ErrorAlert
+    private errorAlert: ErrorAlertService
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.userService
       .fetchData('user?created=1')
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (users: UserListResponse) => {
           this.users = users.data;
+          this.isLoading = false;
         },
         error: (error) => {
           this.errorAlert.showErrorAlert(error.error.error);
+          this.isLoading = false;
         },
       });
 

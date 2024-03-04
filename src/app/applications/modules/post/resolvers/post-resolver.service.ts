@@ -5,21 +5,18 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UsersService } from '../services/users.service';
+import { PostsService } from '../services/posts.service';
 
 @Injectable({ providedIn: 'root' })
-export class UserResolver implements Resolve<any> {
-  constructor(private userService: UsersService) {}
+export class PostResolver implements Resolve<any> {
+  constructor(private postService: PostsService) {}
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> {
-    const userId = route.params['id'];
-
-    let user = this.userService.getUserById(userId);
-    console.log(user);
-
-    return user;
+    const postId = route.params['id'];
+    let post = this.postService.getPostById(postId);
+    return post;
   }
 }

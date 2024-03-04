@@ -4,3 +4,19 @@
 .tag-text {
   color: black;
 }
+
+.custom-dropdown {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.custom-option {
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.custom-option:hover {
+  background-color: #f0f0f0;
+}
