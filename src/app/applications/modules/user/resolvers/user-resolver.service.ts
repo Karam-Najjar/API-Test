@@ -18,7 +18,6 @@ export class UserResolver implements Resolve<any> {
     const userId = route.params['id'];
 
     let user = this.userService.getUserById(userId);
-    console.log(user);
 
     return user;
   }

@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row title">
   <div class="col-8">
     <app-alert
       [message]="error"
@@ -100,16 +100,17 @@
           {{ getValidationErrorMessage("email") }}
         </div>
       </div>
+
       <label for="gender">Gender</label>
       <select
         formControlName="gender"
         style="width: 96%; margin-left: 10px"
         name="gender"
         id="gender"
-        class="dropdown mb-3 btn btn-outline-secondary dropdown-toggle"
+        class="mb-3 btn-outline-secondary dropdown-toggle custom-dropdown"
       >
-        <option value="male">Male</option>
-        <option value="female">Female</option>
+        <option class="custom-option" value="male">Male</option>
+        <option class="custom-option" value="female">Female</option>
       </select>
 
       <div>
