@@ -1,0 +1,13 @@
+<div class="summary-container">
+  <h3>Summary</h3>
+  <hr />
+  <div
+    *ngFor="let controlName of formData.controls | keyvalue; let last = last"
+  >
+    <div class="summary-item">
+      <b>{{ controlName.key | translate }}: </b>
+      <span>{{ formData.get(controlName.key)?.value }}</span>
+      <hr *ngIf="!last" />
+    </div>
+  </div>
+</div>
