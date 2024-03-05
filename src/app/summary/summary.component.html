@@ -10,4 +10,11 @@
       <hr *ngIf="!last" />
     </div>
   </div>
+  <div *ngIf="tags.length > 0">
+    <hr />
+    <b>Tags: </b>
+    <span *ngFor="let tag of tags" class="badge badge-primary tag">{{
+      tag
+    }}</span>
+  </div>
 </div>

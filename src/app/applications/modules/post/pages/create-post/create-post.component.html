@@ -1,94 +1,119 @@
-<form class="row col-6" [formGroup]="createForm" (ngSubmit)="onSubmit()">
-  <div class="mb-5">
-    <h3>{{ formTitle }}</h3>
-  </div>
-  <div class="mb-3">
-    <label for="text" class="form-label">Text</label>
-    <input type="text" class="form-control" id="text" formControlName="text" />
-    <div
-      class="error"
-      *ngIf="createForm.get('text')?.errors && createForm.get('text')?.touched"
-    >
-      {{ getValidationErrorMessage("text") }}
-    </div>
-  </div>
+<div class="row title">
+  <div class="col-8">
+    <form class="row col-6" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+      <div class="mb-5">
+        <h3>{{ formTitle }}</h3>
+      </div>
+      <div class="mb-3">
+        <label for="text" class="form-label">Text</label>
+        <input
+          type="text"
+          class="form-control"
+          id="text"
+          formControlName="text"
+        />
+        <div
+          class="error"
+          *ngIf="
+            createForm.get('text')?.errors && createForm.get('text')?.touched
+          "
+        >
+          {{ getValidationErrorMessage("text") }}
+        </div>
+      </div>
 
-  <div class="mb-3">
-    <label for="image" class="form-label">Image</label>
-    <input
-      placeholder="Image URL"
-      type="text"
-      class="form-control"
-      id="image"
-      formControlName="image"
-    />
-    <div
-      class="error"
-      *ngIf="
-        createForm.get('image')?.errors && createForm.get('image')?.touched
-      "
-    >
-      {{ getValidationErrorMessage("image") }}
-    </div>
-  </div>
-  <!-- OWNER -->
+      <div class="mb-3">
+        <label for="image" class="form-label">Image</label>
+        <input
+          placeholder="Image URL"
+          type="text"
+          class="form-control"
+          id="image"
+          formControlName="image"
+        />
+        <div
+          class="error"
+          *ngIf="
+            createForm.get('image')?.errors && createForm.get('image')?.touched
+          "
+        >
+          {{ getValidationErrorMessage("image") }}
+        </div>
+      </div>
+      <!-- OWNER -->
 
-  <label for="owner">Owner</label>
-  <select
-    formControlName="owner"
-    style="width: 96%; margin-left: 10px"
-    id="owner"
-    class="mb-3 btn-outline-secondary dropdown-toggle custom-dropdown"
-  >
-    <option
-      class="custom-option"
-      *ngFor="let owner of owners"
-      [value]="owner.id"
-    >
-      {{ owner.firstName }} {{ owner.lastName }}
-    </option>
-  </select>
-
-  <!-- END OF OWNER -->
-  <div class="mb-3">
-    <label for="tagInput" class="form-label">Add Tag</label>
-    <input type="text" class="form-control" id="tagInput" #tagInput />
-    <button
-      type="button"
-      class="btn btn-outline-primary mt-2"
-      (click)="addTag(tagInput.value); tagInput.value = ''"
-    >
-      Add Tag
-    </button>
-  </div>
-
-  <div *ngIf="tags.length > 0" class="mb-3">
-    <label>Selected Tags:</label>
-    <div class="d-flex flex-wrap">
-      <div
-        *ngFor="let tag of tags; let i = index"
-        class="badge badge-primary mr-1 mb-1 tag-text"
+      <label for="owner">Owner</label>
+      <select
+        formControlName="owner"
+        style="width: 96%; margin-left: 10px"
+        id="owner"
+        class="mb-3 btn-outline-secondary dropdown-toggle custom-dropdown"
       >
-        {{ tag }}
+        <option
+          class="custom-option"
+          *ngFor="let owner of owners"
+          [value]="owner.id"
+        >
+          {{ owner.firstName }} {{ owner.lastName }}
+        </option>
+      </select>
+      <div
+        class="error"
+        *ngIf="
+          createForm.get('owner')?.errors && createForm.get('owner')?.touched
+        "
+      >
+        {{ getValidationErrorMessage("owner") }}
+      </div>
+
+      <!-- END OF OWNER -->
+      <div class="mb-3 mt-1">
+        <label for="tagInput" class="form-label">Add Tag</label>
+        <input type="text" class="form-control" id="tagInput" #tagInput />
         <button
           type="button"
-          class="btn-close btn-close-black ml-1"
-          (click)="removeTag(i)"
-        ></button>
+          class="btn btn-outline-primary mt-2"
+          (click)="addTag(tagInput.value); tagInput.value = ''"
+        >
+          Add Tag
+        </button>
       </div>
-    </div>
-  </div>
 
-  <div>
-    <button class="btn btn-outline-primary m-1" [disabled]="createForm.invalid">
-      Submit
-    </button>
-    <button
-      class="btn btn-outline-danger m-1"
-      type="button"
-      (click)="onCancel()"
-    >
-      Cancel
-    </button>
+      <div *ngIf="tags.length > 0" class="mb-3">
+        <label>Selected Tags:</label>
+        <div class="d-flex flex-wrap">
+          <div
+            *ngFor="let tag of tags; let i = index"
+            class="badge badge-primary mr-1 mb-1 tag-text"
+          >
+            {{ tag }}
+            <button
+              type="button"
+              class="btn-close btn-close-black ml-1"
+              (click)="removeTag(i)"
+            ></button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button
+          class="btn btn-outline-primary m-1"
+          [disabled]="createForm.invalid"
+        >
+          Submit
+        </button>
+        <button
+          class="btn btn-outline-danger m-1"
+          type="button"
+          (click)="onCancel()"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
   </div>
-</form>
+  <div class="col-4">
+    <app-summary [formData]="createForm" [tags]="tags"></app-summary>
+  </div>
+</div>

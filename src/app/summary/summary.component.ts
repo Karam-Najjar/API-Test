@@ -12,4 +12,5 @@ import { TranslatePipe } from '../shared/pipes/translation.pipe';
 })
 export class SummaryComponent {
   @Input() formData!: FormGroup;
+  @Input() tags: string[] = [];
 }
