@@ -7,7 +7,7 @@ import { ViewPostComponent } from './pages/view-post/view-post.component';
 import { PostRoutingModule } from './post-routing.module';
 import { SharedModule } from '../../../shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
-import { SummaryComponent } from '../../../summary/summary.component';
+import { SummaryComponent } from '../../../shared/components/summary/summary.component';
 
 @NgModule({
   declarations: [ListPostComponent, CreatePostComponent, ViewPostComponent],

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { TranslatePipe } from '../shared/pipes/translation.pipe';
+import { TranslatePipe } from '../../pipes/translation.pipe';
 
 @Component({
   standalone: true,
