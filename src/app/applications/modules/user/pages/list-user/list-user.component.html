@@ -17,10 +17,11 @@
           <th scope="col">First Name</th>
           <th scope="col">Last Name</th>
           <th scope="col">Picture</th>
+          <th scope="col"></th>
         </tr>
       </thead>
-      <tbody *ngFor="let user of users; let i = index">
-        <tr>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index">
           <td>{{ user.title }}</td>
           <td>{{ user.firstName }}</td>
           <td>{{ user.lastName }}</td>
@@ -43,13 +44,25 @@
           </td>
         </tr>
       </tbody>
-
-      <button
-        class="btn btn-outline-success btn-create"
-        routerLink="/users/create"
-      >
-        Create
-      </button>
     </table>
   </div>
 </ng-container>
+
+<!-- <mat-paginator
+  [length]="500"
+  [pageSize]="5"
+  [showFirstLastButtons]="true"
+  [pageSizeOptions]="[5, 10, 20]"
+  [pageIndex]="currentPage"
+  (page)="handlePageEvent($event)"
+>
+</mat-paginator> -->
+
+<footer class="footer mt-auto py-3 bg-light sticky-bottom">
+  <div class="container d-flex justify-content-between align-items-center">
+    <span></span>
+    <button class="btn btn-outline-success" routerLink="/users/create">
+      Create
+    </button>
+  </div>
+</footer>
