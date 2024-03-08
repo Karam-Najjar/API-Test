@@ -15,8 +15,12 @@ export class UsersService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  fetchData(endPoint: string): Observable<UserListResponse> {
-    const url = `${this.baseUrl}${endPoint}`;
+  fetchData(
+    endPoint: string,
+    page: number = 0,
+    limit: number = 20
+  ): Observable<UserListResponse> {
+    const url = `${this.baseUrl}${endPoint}&page=${page}&limit=${limit}`;
     return this.http.get<UserListResponse>(url);
   }
 
