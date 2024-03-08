@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { ListUserComponent } from './pages/list-user/list-user.component';
 import { CreateUserComponent } from './pages/create-user/create-user.component';
@@ -9,6 +10,11 @@ import { SummaryComponent } from '../../../shared/components/summary/summary.com
 
 @NgModule({
   declarations: [ListUserComponent, CreateUserComponent, ViewUserComponent],
-  imports: [UserRoutingModule, SharedModule, SummaryComponent],
+  imports: [
+    UserRoutingModule,
+    SharedModule,
+    SummaryComponent,
+    MatPaginatorModule,
+  ],
 })
 export class UserModule {}

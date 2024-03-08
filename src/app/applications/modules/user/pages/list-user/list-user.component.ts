@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PageEvent } from '@angular/material/paginator';
 import { Subject, takeUntil } from 'rxjs';
 
 import { UsersService } from '../../services/users.service';
@@ -16,6 +17,9 @@ export class ListUserComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
   isLoading: boolean = false;
   error!: string | null;
+  currentPage = 0;
+  pageSize = 20;
+  total!: number;
 
   constructor(
     private userService: UsersService,
@@ -24,14 +28,19 @@ export class ListUserComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
     this.isLoading = true;
     this.userService
-      .fetchData('user?created=1')
+      .fetchData('user?created=1', this.currentPage, this.pageSize)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (users: UserListResponse) => {
           this.users = users.data;
           this.isLoading = false;
+          this.total = users.total;
         },
         error: (error) => {
           this.isLoading = false;
@@ -73,5 +82,11 @@ export class ListUserComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  handlePageEvent(pageEvent: PageEvent) {
+    this.currentPage = pageEvent.pageIndex;
+    this.pageSize = pageEvent.pageSize;
+    this.loadUsers();
   }
 }
