@@ -24,6 +24,11 @@ export class UsersService {
     return this.http.get<UserListResponse>(url);
   }
 
+  getUsers(endPoint: string): Observable<UserListResponse> {
+    const url = `${this.baseUrl}${endPoint}`;
+    return this.http.get<UserListResponse>(url);
+  }
+
   createUser(user: User): Observable<User> {
     const url = `${this.baseUrl}user/create`;
     return this.http.post<User>(url, user);

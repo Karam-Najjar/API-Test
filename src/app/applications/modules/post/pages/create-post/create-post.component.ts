@@ -102,7 +102,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
   }
 
   getOwners() {
-    return this.usersService.fetchData('user').subscribe((data: any) => {
+    return this.usersService.getUsers('user').subscribe((data: any) => {
       this.owners = data.data;
     });
   }
