@@ -1,5 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -12,11 +14,11 @@ import { AuthService } from '../services/auth.service';
 export class AuthComponent {
   @ViewChild('f') authForm!: NgForm;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
     let appId = this.authForm.form.value.id;
-
     this.authService.storingId(appId);
+    this.router.navigate(['/users']);
   }
 }
