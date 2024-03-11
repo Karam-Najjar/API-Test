@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { ReactiveFormsModule } from '@angular/forms';
 import { ActionsComponent } from './components/actions/actions.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { AlertComponent } from './components/alert/alert.component';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ActionsComponent, SpinnerComponent, AlertComponent],
