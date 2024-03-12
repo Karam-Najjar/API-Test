@@ -8,13 +8,11 @@ import { Post } from '../interfaces/post.interface';
 
 @Injectable({ providedIn: 'root' })
 export class PostsService {
+  readonly baseUrl: string = 'https://dummyapi.io/data/v1/';
   postDeletedSubject = new Subject<string>();
   error = new Subject<any>();
   ID: any;
-  baseUrl: string = 'https://dummyapi.io/data/v1/';
   posts: Post[] = [];
-
-  changed = new Subject<Post[]>();
 
   constructor(private http: HttpClient, private authService: AuthService) {
     this.ID = this.authService.gettingId();

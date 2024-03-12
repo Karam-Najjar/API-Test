@@ -8,10 +8,10 @@ import { User } from '../interfaces/user.interface';
 
 @Injectable({ providedIn: 'root' })
 export class UsersService {
+  readonly baseUrl: string = 'https://dummyapi.io/data/v1/';
   userDeletedSubject = new Subject();
   error = new Subject();
   ID: string | null = this.authService.gettingId();
-  baseUrl: string = 'https://dummyapi.io/data/v1/';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 

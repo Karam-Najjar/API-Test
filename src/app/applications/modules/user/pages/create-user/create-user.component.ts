@@ -20,7 +20,6 @@ import { ValidatorService } from '../../../../../shared/validations/validator.se
 export class CreateUserComponent implements OnInit, OnDestroy {
   formTitle: string = 'Create new user';
   userId!: any;
-  isLoading: boolean = false;
   createForm!: FormGroup;
   user: FullUser = {};
   isReadOnly: boolean = false;

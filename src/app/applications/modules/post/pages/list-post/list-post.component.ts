@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 import { PostsService } from '../../services/posts.service';
 import { Post } from '../../interfaces/post.interface';
@@ -11,7 +11,6 @@ import { Post } from '../../interfaces/post.interface';
   styleUrl: './list-post.component.css',
 })
 export class ListPostComponent implements OnInit, OnDestroy {
-  postDeletedSubject = new Subject();
   private unsubscribe$ = new Subject<void>();
   posts: Post[] = [];
   isLoading: boolean = false;
