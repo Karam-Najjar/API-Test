@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import { CustomValidators } from '../../../../../shared/validations/custom-validators';
 import { UsersService } from '../../services/users.service';
 import { FullUser } from '../../interfaces/full-user.interface';
+import { ValidatorService } from '../../../../../shared/validations/validator.service';
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
@@ -31,7 +32,8 @@ export class CreateUserComponent implements OnInit, OnDestroy {
     private usersService: UsersService,
     private router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private validatorService: ValidatorService
   ) {}
 
   ngOnInit() {
@@ -89,24 +91,11 @@ export class CreateUserComponent implements OnInit, OnDestroy {
 
   getValidationErrorMessage(controlName: string): string {
     const control = this.createForm.get(controlName);
-
-    if (control?.hasError('required')) {
-      return this.customValidator.required;
-    }
-
-    if (control?.hasError('minlength')) {
-      return this.customValidator.minLength;
-    }
-
-    if (control?.hasError('maxlength')) {
-      return this.customValidator.maxLength;
-    }
-    if (control?.hasError('email')) {
-      return this.customValidator.email;
-    }
-
-    return '';
+    return control
+      ? this.validatorService.getValidationErrorMessage(control)
+      : '';
   }
+
   onHandleError() {
     this.error = null;
   }

@@ -6,8 +6,9 @@ import { Subscription } from 'rxjs';
 import { CustomValidators } from '../../../../../shared/validations/custom-validators';
 import { PostsService } from '../../services/posts.service';
 import { UsersService } from '../../../user/services/users.service';
-import { Post } from '../../interfaces/post.interface';
 import { FullUser } from '../../../user/interfaces/full-user.interface';
+import { ValidatorService } from '../../../../../shared/validations/validator.service';
+// import { Post } from '../../interfaces/post.interface';
 
 @Component({
   selector: 'app-create-post',
@@ -18,7 +19,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
   formTitle: string = 'Create new post';
   postId!: any;
   createForm!: FormGroup;
-  post!: Post;
+  // post!: Post;
   isReadOnly: boolean = false;
   customValidator = CustomValidators;
   owners!: FullUser[];
@@ -31,12 +32,13 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     private postService: PostsService,
     private router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private validatorService: ValidatorService
   ) {}
 
   ngOnInit() {
     this.postId = this.route.snapshot.params['id'];
-    this.post = this.route.snapshot.data['post'];
+    // this.post = this.route.snapshot.data['post'];
 
     this.getOwners();
 
@@ -46,7 +48,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
       this.subscription = this.postService
         .getPostById(this.postId)
         .subscribe((postData: any) => {
-          this.post = postData;
+          // this.post = postData;
           this.tags = postData.tags;
           postData.owner = postData.owner.id;
           this.createForm.patchValue(postData);
@@ -66,13 +68,17 @@ export class CreatePostComponent implements OnInit, OnDestroy {
 
     // Update mode
     if (this.postId) {
-      this.postService.updatePost(this.postId, formData).subscribe((data) => {
-        this.router.navigate(['/posts']);
-      });
+      this.subscription = this.postService
+        .updatePost(this.postId, formData)
+        .subscribe((data) => {
+          this.router.navigate(['/posts']);
+        });
     } else {
-      this.postService.createPost(formData).subscribe((data) => {
-        this.router.navigate(['/posts']);
-      });
+      this.subscription = this.postService
+        .createPost(formData)
+        .subscribe((data) => {
+          this.router.navigate(['/posts']);
+        });
     }
   }
 
@@ -82,23 +88,9 @@ export class CreatePostComponent implements OnInit, OnDestroy {
 
   getValidationErrorMessage(controlName: string): string {
     const control = this.createForm.get(controlName);
-
-    if (control?.hasError('required')) {
-      return this.customValidator.required;
-    }
-
-    if (control?.hasError('minlength')) {
-      return this.customValidator.minLength;
-    }
-
-    if (control?.hasError('maxlength')) {
-      return this.customValidator.maxLength;
-    }
-    if (control?.hasError('email')) {
-      return this.customValidator.email;
-    }
-
-    return '';
+    return control
+      ? this.validatorService.getValidationErrorMessage(control)
+      : '';
   }
 
   getOwners() {
