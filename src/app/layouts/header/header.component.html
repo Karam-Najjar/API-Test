@@ -1,11 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand"
-      ><img
+    <a class="navbar-brand" routerLink="/">
+      <img
         class="sxw-image"
         src="../../../../assets/images/logos/storexweb.png"
-        alt=""
-    /></a>
+        alt="StoreXWeb Logo"
+      />
+    </a>
     <button
       class="navbar-toggler"
       type="button"
@@ -25,22 +26,23 @@
             routerLink="/users"
             routerLinkActive="active"
             aria-current="page"
-            >Users</a
           >
+            <i class="bi bi-person"></i> Users
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/posts" routerLinkActive="active"
-            >Posts</a
-          >
+          <a class="nav-link" routerLink="/posts" routerLinkActive="active">
+            <i class="bi bi-journal-text"></i> Posts
+          </a>
         </li>
       </ul>
-      <span class="me-2">{{ appId }}</span>
+      <span class="me-2">App ID: {{ appId }}</span>
       <button
         class="btn btn-outline-secondary me-lg-2"
         type="button"
-        routerLink="auth"
+        routerLink="/auth"
       >
-        Auth
+        <i class="bi bi-shield-lock"></i> Auth
       </button>
     </div>
   </div>
