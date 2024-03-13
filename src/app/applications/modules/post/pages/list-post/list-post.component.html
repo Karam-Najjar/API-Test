@@ -1,22 +1,31 @@
+<!-- Component HTML template for displaying a list of posts -->
+
+<!-- Display error message if exists -->
 <app-alert
   [message]="error"
   *ngIf="error"
   (close)="onHandleError()"
 ></app-alert>
+
+<!-- Display spinner while loading -->
 <ng-container *ngIf="isLoading">
   <app-spinner></app-spinner>
 </ng-container>
+
+<!-- Display posts if not loading -->
 <ng-container *ngIf="!isLoading">
   <div
     style="display: flex; flex-wrap: wrap; justify-content: center"
     class="container"
   >
+    <!-- Loop through posts and display each post -->
     <div
       *ngFor="let post of posts; let i = index"
       class="row align-items-start"
       style="max-width: 300px; margin: 0 10px"
     >
       <div class="card col" style="max-width: 300px">
+        <!-- User information -->
         <div class="user-info">
           <img [src]="post.owner.picture" alt="User Image" class="user-image" />
           <div class="user-details">
@@ -27,10 +36,16 @@
             <div class="date">{{ post.publishDate | date }}</div>
           </div>
         </div>
+
+        <!-- Post image -->
         <div class="post-image">
           <img [src]="post.image" alt="Post Image" class="post-image" />
         </div>
+
+        <!-- Post description -->
         <div class="description">{{ post.text }}</div>
+
+        <!-- Tags -->
         <div>
           <span class="tags-title">Tags: </span>
           <ng-container *ngFor="let tag of post.tags; let isLast = last">
@@ -38,11 +53,16 @@
             <ng-container *ngIf="!isLast">&nbsp;</ng-container>
           </ng-container>
         </div>
+
+        <!-- Likes -->
         <div class="likes">
           Likes : {{ post.likes }}
           <mat-icon style="margin-left: 5px">thumb_up</mat-icon>
         </div>
+
         <hr />
+
+        <!-- Actions for the post -->
         <app-actions
           [id]="post.id"
           (update)="onUpdatePost(i)"
@@ -53,6 +73,8 @@
       </div>
     </div>
   </div>
+
+  <!-- Create new post button -->
   <div class="container d-flex justify-content-between align-items-center">
     <span></span>
     <button class="btn btn-outline-success" routerLink="/posts/create">

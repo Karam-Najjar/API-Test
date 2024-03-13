@@ -1,9 +1,16 @@
+<!-- Component HTML template for creating or updating posts -->
+
 <div class="row title">
+  <!-- Left column for the form -->
   <div class="col-8">
+    <!-- Form for creating or updating posts -->
     <form class="row col-6" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+      <!-- Form Title -->
       <div class="mb-5">
         <h3>{{ formTitle }}</h3>
       </div>
+
+      <!-- Text Input -->
       <div class="mb-3">
         <label for="text" class="form-label">Text</label>
         <input
@@ -12,6 +19,7 @@
           id="text"
           formControlName="text"
         />
+        <!-- Error message for text input -->
         <div
           class="error"
           *ngIf="
@@ -22,6 +30,7 @@
         </div>
       </div>
 
+      <!-- Image Input -->
       <div class="mb-3">
         <label for="image" class="form-label">Image</label>
         <input
@@ -31,6 +40,7 @@
           id="image"
           formControlName="image"
         />
+        <!-- Error message for image input -->
         <div
           class="error"
           *ngIf="
@@ -40,8 +50,8 @@
           {{ getValidationErrorMessage("image") }}
         </div>
       </div>
-      <!-- OWNER -->
 
+      <!-- Owner Selection -->
       <label for="owner">Owner</label>
       <select
         formControlName="owner"
@@ -49,6 +59,7 @@
         id="owner"
         class="mb-3 btn-outline-secondary dropdown-toggle custom-dropdown"
       >
+        <!-- Display list of owners -->
         <option
           class="custom-option"
           *ngFor="let owner of owners"
@@ -57,6 +68,7 @@
           {{ owner.firstName }} {{ owner.lastName }}
         </option>
       </select>
+      <!-- Error message for owner selection -->
       <div
         class="error"
         *ngIf="
@@ -66,10 +78,11 @@
         {{ getValidationErrorMessage("owner") }}
       </div>
 
-      <!-- END OF OWNER -->
+      <!-- Tag Input -->
       <div class="mb-3 mt-1">
         <label for="tagInput" class="form-label">Add Tag</label>
         <input type="text" class="form-control" id="tagInput" #tagInput />
+        <!-- Button to add tag -->
         <button
           type="button"
           class="btn btn-outline-primary mt-2"
@@ -79,6 +92,7 @@
         </button>
       </div>
 
+      <!-- Display selected tags -->
       <div *ngIf="tags.length > 0" class="mb-3">
         <label>Selected Tags:</label>
         <div class="d-flex flex-wrap">
@@ -87,6 +101,7 @@
             class="badge badge-primary mr-1 mb-1 tag-text"
           >
             {{ tag }}
+            <!-- Button to remove tag -->
             <button
               type="button"
               class="btn-close btn-close-black ml-1"
@@ -96,13 +111,16 @@
         </div>
       </div>
 
+      <!-- Form Submission Buttons -->
       <div>
+        <!-- Submit Button -->
         <button
           class="btn btn-outline-primary m-1"
           [disabled]="createForm.invalid"
         >
           Submit
         </button>
+        <!-- Cancel Button -->
         <button
           class="btn btn-outline-danger m-1"
           type="button"
@@ -113,7 +131,10 @@
       </div>
     </form>
   </div>
+
+  <!-- Right column for displaying summary -->
   <div class="col-4">
+    <!-- Include summary component -->
     <app-summary [formData]="createForm" [tags]="tags"></app-summary>
   </div>
 </div>
